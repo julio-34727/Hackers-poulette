@@ -16,9 +16,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') //isset($_POST['send'])
     $_POST['gender'] = $_POST['gender'] ?? ''; //default value for radio-btn (no check)
     $_POST['email'] = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 
+    // anti-sapm (honeypot)
+    if (strlen($_POST['color'])>1) {
+        header('location: ./assets/includes/404.php');
+        exit;
+    }
+
     require('./assets/includes/process.php');
 
-    // Sending a mail
+    if (!$missing && !$errors) 
+    {
+        header('location: ./assets/includes/thanks.php');
+        exit;
+    }
 }
 
 // var_dump($_POST);
