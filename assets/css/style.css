@@ -1,0 +1,72 @@
+/* Fonts */
+@font-face{
+    font-family: "Bellota";
+    src: url("../../assets/css/fonts/bellota/Bellota-Regular.otf");
+}
+@font-face{
+    font-family: "Bellota";
+    src: url("../../assets/css/fonts/bellota/Bellota-Bold.otf");
+    font-weight: bold;
+}
+
+/* Main colors  */
+:root {
+    --green-color: rgb(21, 197, 189);  /*#15C5BD;*/
+    --white-color: rgb(255, 255, 255); /*#FFF;*/
+    --black-color: rgb(48, 48, 48);    /*#303030;*/
+}
+
+/* Box-sizing and css */
+html {
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: Bellota, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
+        Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+body, h1, h2, h3, 
+header, main, article, aside, section, footer, 
+p, div, button, input {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+/* Rules for main design */
+body {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: minimax(380px, 1fr);
+    grid-template-rows: auto 1fr auto;
+}
+#header, #footer {
+    background-color: var(--black-color);
+    color: var(--green-color);
+    text-align: center;
+}
+#header, #main, #footer {
+    box-shadow: 0 0.5rem 1rem rgba(30, 30, 30, 0.05), 
+    inset 0 -1px 0 rgba(30, 30, 30, 0.1);
+}
+#main {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+}
+
+
+
+
+
+
+.honeypot {display: none}
+
+
+/* Rules for form validation */
+p.error, .form__label {
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+.error {color: brown;}
+.correct {color: navy;}
