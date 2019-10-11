@@ -15,7 +15,7 @@
 
 Ce projet consiste  à concevoir un forumulaire de contact interactif en PHP 7 pour une marque fictive "Hackers-Poulette" dans le cadre de la formation **Fullstack** chez Becode.
 
-Vous pouvez cliquer sur ce [lien](https://julio-34727.github.io/restaurant-css-framework/) pour acceder au répo du projet.
+Vous pouvez cliquer sur ce [lien](https://github.com/julio-34727/hackers-poulette) pour acceder au répo du projet.
 
 ### Mock-up
 
