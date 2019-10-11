@@ -2,7 +2,7 @@
 
 function checkFirstnameInputs($missing, $errors) 
 {
-    if (in_array('firstname', $missing)) {$out = '<span class="error">Type a valid first name please</span>';}
+    if (in_array('firstname', $missing)) {$out = '<span class="error">type a valid first name please</span>';}
     elseif (isset($_POST['firstname'])) {$out = '<span class="correct">valid first name &#10004;</span>';}
     else {$out = '';}
     return $out;
@@ -10,7 +10,7 @@ function checkFirstnameInputs($missing, $errors)
 
 function checkLastnameInputs($missing, $errors) 
 {
-    if (in_array('lastname', $missing)) {$out = '<span class="error">Type a valid last name please</span>';}
+    if (in_array('lastname', $missing)) {$out = '<span class="error">type a valid last name please</span>';}
     elseif (isset($_POST['lastname'])) {$out = '<span class="correct">valid last name &#10004;</span>';}
     else {$out = '';}
     return $out;
@@ -18,7 +18,7 @@ function checkLastnameInputs($missing, $errors)
 
 function checkEmailInputs($missing, $errors) 
 {
-    if (in_array('email', $missing)) {$out = '<span class="error">Type a valid email (RFC 5322) please</span>';}
+    if (in_array('email', $missing)) {$out = '<span class="error">type a valid email (RFC 5322) please</span>';}
     elseif (isset($_POST['email'])) {$out = '<span class="correct">valid email &#10004;</span>';}
     else {$out = '';}
     return $out;
@@ -26,7 +26,7 @@ function checkEmailInputs($missing, $errors)
 
 function checkGenderChoice($missing, $errors) 
 {
-    if (in_array('gender', $missing)) {$out = '<span class="error">Choose your gender please</span>';}
+    if (in_array('gender', $missing)) {$out = '<span class="error">choose your gender please</span>';}
     elseif (isset($_POST['gender'])) {$out = '<span class="correct">valid choice &#10004;</span>';}
     else {$out = '';}
     return $out;
@@ -34,7 +34,7 @@ function checkGenderChoice($missing, $errors)
 
 function checkCountryChoice($missing, $errors) 
 {
-    if (in_array('country', $missing)) {$out = '<span class="error">Choose your country please</span>';}
+    if (in_array('country', $missing)) {$out = '<span class="error">choose your country please</span>';}
     elseif (isset($_POST['country'])) {$out = '<span class="correct">valid choice &#10004;</span>';}
     else {$out = '';}
     return $out;
@@ -42,7 +42,7 @@ function checkCountryChoice($missing, $errors)
 
 function checkSubjectChoice($missing, $errors) 
 {   
-    if (in_array('subject', $missing)) {$out = '<span class="error">Choose one subject please</span>';}
+    if (in_array('subject', $missing)) {$out = '<span class="error">choose one subject please</span>';}
     elseif (isset($_POST['subject'])) {$out = '<span class="correct">valid subject &#10004;</span>';}
     else {$out = '';}
     return $out;
@@ -50,7 +50,7 @@ function checkSubjectChoice($missing, $errors)
 
 function checkCommentsInputs($missing, $errors) 
 {
-    if (in_array('comments', $missing)) {$out = '<span class="error">Type your comments please</span>';}
+    if (in_array('comments', $missing)) {$out = '<span class="error">type your comments please</span>';}
     elseif (isset($_POST['comments'])) {$out = '<span class="correct">valid comments &#10004;</span>';}
     else {$out = '';}
     return $out;
