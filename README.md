@@ -5,6 +5,8 @@
 * [Description](#Description)
 * [Mock-up](#Mock-up)
 * [Technologies](#Technologies)
+  * [Front-end](#Front-end)
+  * [Back-end](#Back-end)
 * [Ressources](#Ressources)
 * [Contact](#Contact)
 
