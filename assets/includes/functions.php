@@ -73,7 +73,7 @@ function printSubjectFieldErrors($post) {
 }
 
 function printCommentsFieldErrors($post) {
-    $errorMsg = '<span class="error">type your comments please (1-200 chars) &#10007;</span>';
+    $errorMsg = '<span class="error">type your comments please &#10007;</span>';
     return printFieldErrors($post, 'comments', $errorMsg);
 }
 
