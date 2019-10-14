@@ -1,10 +1,14 @@
 /* Fonts */
-@font-face{
+@font-face {
     font-family: "Bellota";
+    font-display: auto;
     src: url("../../assets/css/fonts/bellota/Bellota-Regular.otf");
+    font-weight: normal;
+    font-style: normal;
 }
-@font-face{
+@font-face {
     font-family: "Bellota";
+    font-display: auto;
     src: url("../../assets/css/fonts/bellota/Bellota-Bold.otf");
     font-weight: bold;
 }
@@ -25,125 +29,154 @@ html {
 }
 body, h1, h2, h3, 
 header, main, article, aside, section, footer, 
-p, div, button, input {
+p, div, button, input, select, textarea {
     box-sizing: inherit;
     margin: 0;
     padding: 0;
     border: none;
+    font-family: inherit;
 }
 
 /* Rules for main design */
 body {
-    background-color: #f8f9fa;
-    min-height: 100vh;
+    height: 100vh;
     display: grid;
-    grid-template-columns: minimax(380px, 1fr);
+    grid-template-columns: minmax(380px, 1fr);
     grid-template-rows: auto 1fr auto;
+    background-color: #f8f9fa;
+    color: var(--black-color);
 }
 #header, #footer {
     background-color: var(--black-color);
     color: var(--green-color);
     text-align: center;
 }
-#header, #main, #footer {
+#header, #main, #footer, .section {
     box-shadow: 0 0.5rem 1rem rgba(30, 30, 30, 0.05), 
     inset 0 -1px 0 rgba(30, 30, 30, 0.1);
 }
-#main {
-    display: grid;
-    justify-content: center;
-    align-items: center;
-}
 
-
-/* Rules form section */
-/* ====== */
+/* Rules for main section  */
 .section {
-    background-color: var(--white-color);
+    padding: 2rem 1rem;
+    margin: 0 auto;
+    height: 100%;
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: auto 1fr; 
     grid-gap: 1rem;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
 }
 
-.section > * {
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-.section > *:not(:last-child) {text-align: center;}
-.section #logo img {width: 200px;}
-
-.section__body {
-    display: flex;
-    flex-direction: column;
+/* Rules for section__head */
+.section__head #logo {
+    display: block;
     background-color: var(--green-color);
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    position: relative;
+}
+.section__head #logo img {
+    display: block;
+    width: 150px;
+    margin: auto;
 }
 
-.form__group {
-    display: flex;
-    flex-direction: column;
+#edit-icon {
+    width: 40px;
+    animation:icon-animate 5s infinite;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+#edit-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    color: dimgray;
+}
+@keyframes icon-animate {
+	100% {
+		transform: rotate(360deg);
+	}
+}
+.section__head h2 {
+    margin: 1.5rem 0;
+    border-bottom: 1px solid currentColor;
+    font-size: 1.75rem;
+    font-weight: bolder;
+    text-transform: uppercase;
 }
 
-.form__group:not(:last-child) {margin-bottom: 1rem;}
-.form__group:nth-child(4) {
-    flex-direction: row;
-    justify-content: center;
+/* Rules for section__body (form) */
+.form {
+    display: grid;
+    grid-gap: 1rem;
+}
+.form__group:not(.honeypot) {
+    display: grid;
+    grid-gap: 0.25rem;
+}
+.form__radio-group {
+    grid-template-columns: 1fr repeat(6, min-content) 1fr;
+    justify-items: start;
     align-items: baseline;
 }
-.form__group:nth-child(7) {flex: 1;}
+.form__group:last-child {
+    grid-template-columns: 1fr minmax(300px, 1fr) 1fr;
+}
+.form__group .btn {
+    grid-column-start: 2;
+}
 
+.form__radio-group .form__radio-input:first-child {grid-column-start: 2;}
+.form__radio-group .form__label {
+    grid-row: 2/end;
+    grid-column: 1/end;
+}
+
+/* Rules for field  */
 .form__input, .form__area, .form__select {
-    background-color: rbga(255, 255, 255, 0.5);
-    background-clip: padding-box;
+    padding: .375rem .75rem;
     font-weight: 400;
     line-height: 1.5;
-    height: calc(1.5em + .75rem + 2px);
-    padding: 0.375rem 0.75rem;
+    color: #495057;
+    background-clip: padding-box;
     border: 1px solid #ced4da;
-    border-radius: .25rem;
-    display: block;
-    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
-
-
-/* ==== */
-
-/* Rules for form fields */
-
-.honeypot {display: none;}
 option[default] {display: none;}
 
-
+/* Rules for accesibility (labels) */
+.screen-reader {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+.screen-reader-focusable:active,
+.screen-reader-focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    white-space: normal;
+    width: auto;
+}
 .form__label {
-    font-family: serif;
-	margin-top: 0.5rem;
-	display: block;
-	transition: all .3s
+    display: block;
+    transition-property: all;
+    transition-duration: 3s;
 }
 .form__input:placeholder-shown + .form__label, 
-.form__area:placeholder-shown + .form__label,
-.form__group--radio + .form__label,
-.form__select + .form__label {display: none;}
+.form__area:placeholder-shown + .form__label, 
+.form__select + .form__label,
+.form__radio-input ~ .form__label {display: none;}
 
-/* Rules for form validation */
-p.error, .form__label {
-    font-weight: bold;
-    font-size: 0.8rem;
-}
-.error {color: brown;}
-.correct {color: navy;}
-
-
-/* ======= */
-
-/* RULES FOR MEDIA QUERIES */
-
-
+/* Rules for button SEND */
 .btn--dark {
     background-color: var(--black-color);
     color: var(--white-color);
@@ -164,20 +197,38 @@ p.error, .form__label {
         box-shadow 0.15s ease-in-out;
 }
 
+/* Rules for honneypot */
+.honeypot {display: none !important;}
+
+/* Rules for form validation */
+p.error, .form__label {
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+.error {color: brown;}
+.correct {color: navy;}
+.border-error {border-color: brown;}
+.border-correct {border-color: var(--green-color);}
+
+/* Rules for media queries */
 @media screen and (min-width: 576px) {
-    .section {
-        max-width: 540px;
-    }
+    .section {max-width: 540px;}
 }
 
 @media screen and (min-width: 768px) {
-    .section {
-        max-width: 720px;
+    .section {max-width: 720px;}
+    .form {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(6, auto);
+        grid-auto-flow: column;
     }
+    .form__group:nth-last-child(2) {grid-row: 1/-2;}
 }
 
 @media screen and (min-width: 992px) {
-    .section {
-        max-width: 960px;
-    }
-}
+    .section {max-width: 960px;}
+} 
+
+@media screen and (min-width: 1200px) {
+    .section {max-width: 1140px;}
+} 

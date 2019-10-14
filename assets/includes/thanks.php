@@ -6,15 +6,17 @@
     <link rel="stylesheet" href="../../assets/css/style.css" />
 </head>
 <body>
+    <header id="header">
+        <h1>Hackers Poulette Sprl</h1>
+    </header>
     <main id="main">
         <section class="section">
             <header class="section__head">
-                <h2>Thank You</h2>
                 <a href="../../index.php" id="logo"><img src="../../assets/img/hackers-poulette-logo.png" alt="Hackers poulette logo"></a>
+                <h2>Thank You</h2>
             </header>
             <div class="section__body thanks">
                 <p>Your message has been sent. We appreciate your feedback, and will be in touch if necessary.</p>
-                <p>We hope you'll continue to enjoy browsing the Japan Journey website.</p>
             </div>
         </section>
     </main>

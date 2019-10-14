@@ -1,128 +1,118 @@
 <?php 
 
-function checkFirstnameInputs($missing, $errors) 
-{
-    if (in_array('firstname', $missing)) {$out = '<span class="error">type a valid first name please</span>';}
-    elseif (isset($_POST['firstname'])) {$out = '<span class="correct">valid first name &#10004;</span>';}
-    else {$out = '';}
+## Fonctions de vérification d'un champ du formulaire
+function isValidField($field, $value) {
+    # First name & last name: 
+    #    - (2-32) lettres d'alphabet en unicode (french, dutch, english, spanish...)
+    #    - nomps composés avec tirets, espaces et apostrophes
+    # Email: <=320 caractères au format email (standard RFC 5321)
+    # Comments: texte avec >= 1 caractère (pas d'espaces au début)
+    if (in_array($field, ['firstname', 'lastname'])) {
+        $regex = "/^[\p{L}]+([\ \'](?:\p{L}+))?([\ \'\-](?:\p{L}+))*$/u";
+        $out = preg_match($regex, $value) && strlen($value) > 1 && strlen($value) <= 32;
+    }
+    elseif ($field === 'email') {
+        $regex1 = "/(\.{2}|-{2}|_{2})/";
+        $regex2 = "/^[a-z0-9][a-z0-9-_\.]+@([a-z]|[a-z0-9]?[a-z0-9-]+[a-z0-9])\.[a-z0-9]{2,10}(?:\.[a-z]{2,10})?$/i";
+        $out = !preg_match($regex1, $value) && preg_match($regex2, $value) && strlen($value) <= 320;
+    }
+    elseif (in_array($field, ['gender', 'country', 'subject'])) {$out = boolval($value);}
+    elseif ($field === 'comments') {$out = strlen($value) >= 1;}
+
     return $out;
 }
 
-function checkLastnameInputs($missing, $errors) 
-{
-    if (in_array('lastname', $missing)) {$out = '<span class="error">type a valid last name please</span>';}
-    elseif (isset($_POST['lastname'])) {$out = '<span class="correct">valid last name &#10004;</span>';}
-    else {$out = '';}
+function enableFieldErrors($post) {
+    if (count($post) > 2) {return 'style="display: block;"';}
+}
+
+## Fonctions d'affichage des messages d'erreur
+function printFixErrors($post) {
+    if ($post['missing'] || $post['errors']) {
+        return '<p class="error">*Please fix the item(s) indicated in red.</p>';
+    }
+}
+
+function printFieldErrors($post, $field, $errorMsg) {
+    if (count($post) == 2) {$out = '';}
+    elseif (in_array($field, $post['missing'])) {$out = '<span class="error">empty field &#10007;</span>';}
+    elseif (in_array($field, $post['errors'])) {$out = $errorMsg;}
+    else {$out = '<span class="correct">valid field &#10004;</span>';}
+
     return $out;
 }
 
-function checkEmailInputs($missing, $errors) 
-{
-    if (in_array('email', $missing)) {$out = '<span class="error">type a valid email (RFC 5322) please</span>';}
-    elseif (isset($_POST['email'])) {$out = '<span class="correct">valid email &#10004;</span>';}
-    else {$out = '';}
-    return $out;
+function printFirstnameFieldErrors($post) {
+    $errorMsg = '<span class="error">only unicode letters (2-32 chars) &amp; compound names &#10007;</span>';
+    return printFieldErrors($post, 'firstname', $errorMsg);
 }
 
-function checkGenderChoice($missing, $errors) 
-{
-    if (in_array('gender', $missing)) {$out = '<span class="error">choose your gender please</span>';}
-    elseif (isset($_POST['gender'])) {$out = '<span class="correct">valid choice &#10004;</span>';}
-    else {$out = '';}
-    return $out;
+function printLastnameFieldErrors($post) {
+    $errorMsg = '<span class="error">only unicode letters (2-32 chars) &amp; compound names &#10007;</span>';
+    return printFieldErrors($post, 'lastname', $errorMsg);
 }
 
-function checkCountryChoice($missing, $errors) 
-{
-    if (in_array('country', $missing)) {$out = '<span class="error">choose your country please</span>';}
-    elseif (isset($_POST['country'])) {$out = '<span class="correct">valid choice &#10004;</span>';}
-    else {$out = '';}
-    return $out;
+function printEmailFieldErrors($post) {
+    $errorMsg = '<span class="error">invalid email format (RFC 5321) &#10007;</span>';
+    return printFieldErrors($post, 'email', $errorMsg);
 }
 
-function checkSubjectChoice($missing, $errors) 
-{   
-    if (in_array('subject', $missing)) {$out = '<span class="error">choose one subject please</span>';}
-    elseif (isset($_POST['subject'])) {$out = '<span class="correct">valid subject &#10004;</span>';}
-    else {$out = '';}
-    return $out;
+function printGenderFieldErrors($post) {
+    $errorMsg = '<span class="error">no button checked &#10007;</span>';
+    return printFieldErrors($post, 'gender', $errorMsg);
 }
 
-function checkCommentsInputs($missing, $errors) 
-{
-    if (in_array('comments', $missing)) {$out = '<span class="error">type your comments please</span>';}
-    elseif (isset($_POST['comments'])) {$out = '<span class="correct">valid comments &#10004;</span>';}
-    else {$out = '';}
-    return $out;
+function printCountryFieldErrors($post) {
+    $errorMsg = '<span class="error">no selection in the drop list &#10007;</span>';
+    return printFieldErrors($post, 'country', $errorMsg);
 }
 
-function preserveFirstnameInputs($missing, $errors)
-{
-    if ($missing || $errors) {return 'value="'.htmlentities($_POST['firstname']).'"';}
+function printSubjectFieldErrors($post) {
+    $errorMsg = '<span class="error">no selection in the drop list &#10007;</span>';
+    return printFieldErrors($post, 'subject', $errorMsg);
 }
 
-function preserveLastnameInputs($missing, $errors)
-{
-    if ($missing || $errors) {return 'value="'.htmlentities($_POST['lastname']).'"';} 
+function printCommentsFieldErrors($post) {
+    $errorMsg = '<span class="error">type your comments please (1-200 chars) &#10007;</span>';
+    return printFieldErrors($post, 'comments', $errorMsg);
 }
 
-function preserveEmailInputs($missing, $errors)
-{
-    if ($missing || $errors) 
-    {
-        return 'value="'.$_POST['email'].'"';
+## Fonctions pour retenir la saisie de l'utilisateur
+function preserveFirstnameInputs($post) {
+    if ($post['missing'] || $post['errors']) {return 'value="'.htmlentities($post['firstname']).'"';}
+}
+
+function preserveLastnameInputs($post) {
+    if ($post['missing'] || $post['errors']) {return 'value="'.htmlentities($post['lastname']).'"';}
+}
+
+function preserveEmailInputs($post) {
+    if ($post['missing'] || $post['errors']) {
+        $email = filter_var($post['email'], FILTER_SANITIZE_EMAIL); //nettoyage (caractères interdits)
+        return 'value="'.$email.'"';
     } 
 }
 
-function preserveGenderChoice($missing, $errors)
-{
-    if ($missing || $errors) {return 'value="'.$_POST['gender'].'"';}   
+function preserveGenderChoice($post, $currValue) {
+    if (($post['missing'] || $post['errors']) && ($post['gender'] === $currValue)) {
+        return 'checked';
+    }  
 }
 
-function preserveCountryChoice($missing, $errors)
-{
-    if ($missing || $errors) {return 'value="'.$_POST['country'].'"';}    
+function preserveCountryChoice($post, $currValue) {
+    if (($post['missing'] || $post['errors']) && ($post['country'] === $currValue)) {
+        return 'selected';
+    }    
 }
 
-function preserveSubjectChoice($missing, $errors)
-{
-    if ($missing || $errors) {return 'value="'.$_POST['subject'].'"';} 
+function preserveSubjectChoice($post, $currValue) {
+    if (($post['missing'] || $post['errors']) && ($post['subject'] === $currValue)) {
+        return 'selected';
+    }  
 }
 
-function preserveCommentsInputs($missing, $errors)
-{
-    if ($missing || $errors) {return 'value="'.htmlentities($_POST['comments']).'"';}
+function preserveCommentsInputs($post) {
+    if ($post['missing'] || $post['errors']) {return htmlentities($post['comments']);}
 }
-
-
-
-
-function sendMailToHackersPoulette($forms, $message, $admin, $coach=null) 
-{
-    $firstname = $forms['firstname'];
-    $lastname = $forms['lastname'];
-    $emailUser = $forms['email'];
-    $gender = $forms['gender'];
-    $country = $forms['country'];
-    $subject = $forms['subject'];
-    $comments = $forms['comments'];
-    $emailAdmin = $admin['firstname'].' '.$admin['email'];
-
-    $headers[] = 'Content-Type: text/plain; charset=utf-8';
-    $headers[] = 'From: '.$firstname.' <'.$emailUser.'>';
-    $headers[] = ($coach != null) ? 'Cc: '.$coach['firstname'].' '.$coach['email'] : '';
-    $headers = implode('\r\n', $headers);
-
-    mail($emailAdmin, $subject, $message);
-}
-
-// $admin = array('firstname' => 'Julio', 'email' => '<j.tusamba@gmail.com>'); //'Emily <emily@becode.org>';
-// $coach = array('firstname' => 'Kibens', 'email' => '<julio.t@hotmail.be>'); //'Marvin <marvin@becode.org>';
-
-// $message = <<<TAG
-// Thank You\r\n
-// Your message has been sent. We appreciate your feedback, and will be in touch if necessary.\r\n
-// We hope you'll continue to enjoy browsing the Japan Journey website.
-// TAG;
 
 ?>

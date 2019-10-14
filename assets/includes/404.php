@@ -6,11 +6,14 @@
     <link rel="stylesheet" href="../../assets/css/style.css" />
 </head>
 <body>
+    <header id="header">
+        <h1>Hackers Poulette Sprl</h1>
+    </header>
     <main id="main">
         <section class="section">
             <header class="section__head">
-                <h2>Error</h2>
                 <a href="../../index.php" id="logo"><img src="../../assets/img/hackers-poulette-logo.png" alt="Hackers poulette logo"></a>
+                <h2>Error</h2>
             </header>
             <div class="section__body error-404">
                 <p>The page you're looking for appears to be missing.</p>

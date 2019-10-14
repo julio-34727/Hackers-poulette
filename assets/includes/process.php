@@ -1,51 +1,42 @@
 <?php
 
-// Populate missing and errors values
-foreach ($_POST as $field => $value) 
-{
-    if (!is_array($value)) {$value = trim($value);}
-    if (in_array($field, $required) && !$value) 
-    {
-        $missing[] = $field;
-        ${$field} = ''; //create new variables dynamically (accessible in the DOM)
-    }
-    else {${$field} = $value;}
+## Anti-sapm (honeypot)
+if (strlen($_POST['color']) > 1) {
+    header('Location: ./assets/includes/404.php');
+    exit;
 }
 
-// Validate email user
-// if (isset($_POST['email']) && !empy($_POST['email'])) 
-// {
-//     $validemail = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-//     if ($validemail) {$headers[] = "Reply-To: $validemail";} 
-//     else {$errors['email'] = true;}
+## Reglages 
+#    - Valeur par défaut '' si le champ 'radio-btn' n'est pas coché (opérateur null coalescent ??)
+#    - nettoyage du champ email (SANITIZE)
+$required = ['firstname', 'lastname', 'email', 'gender', 'country', 'subject', 'comments'];
+$_POST['gender'] = $_POST['gender'] ?? ''; 
+$_POST['email'] = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 
-// }
+## Redirige vers la page 404.php si le champ (pot de miel) est rempli
+if (strlen($_POST['color'])>1) {
+    header('Location: ./assets/includes/404.php');
+    exit;
+}
 
-// $mailSent = false;
+## Remplissage du tableau $_SESSION
+foreach ($_POST as $field => $value) {
+    if (!is_array($value)) {$value = trim($value);}     # supprime les espaces début/fin (not array)
+    if (in_array($field, $required) && empty($value)) { # champ vide (manquant)
+        $post['missing'][] = $field;        
+        $post[$field] = '';     
+    }
+    elseif (in_array($field, $required) && !isValidField($field, $value)) {
+        $post['errors'][] = $field; 
+        $post[$field] = $value;
+    }
+    else {$post[$field] = $value;}
+}
 
-// if (!$missing && !$errors) 
-// {
-//     $message = ''; //initialization
-//     foreach($required as $field) 
-//     {
-//         if (isset(${$field}) && !empty(${$field})) {$value = ${$field};} 
-//         else {$value = 'Not selected';}
-
-//         if (is_array($value)) {$val = implode(', ', $value);}
-
-//         $field = str_replace('_', ' ', $field);
-
-//         $message .= ucfirst($field).": $val\r\n\r\n";
-//     }
-
-//     $message = wordwrap($message, 70);    //70 characters max for a line
-//     $headers = implode("\r\n", $headers); //formatting headers into a single string
-
-//     $mailSent = mail($to, $subject, $message, $headers);
-
-//     if (!$mailSent) {$errors['mailfail'] = true;}
-// }
-
-
+## Redirige vers la page de remerciements (si pas d'erreurs)
+if (empty($post['missing']) && empty($post['errors'])) {
+    header('Location: ./assets/includes/thanks.php');
+    exit;
+}
 
 ?>
