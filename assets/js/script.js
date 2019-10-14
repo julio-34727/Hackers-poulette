@@ -16,7 +16,7 @@ const isValidInputsField = (field, input) => {
     }
     else if (field === 'email') {out = isValidEmail(input);}
     else if (field === 'comments') {
-        out = input.length > 1;
+        out = input.length >= 1;
     }
 
     return out;
@@ -41,9 +41,9 @@ document.querySelector('form').addEventListener('input', event => {
             event.target.classList.remove('border-error');
         } 
         else {
-            const msg1 = 'only unicode letters (2-32 chars) &amp; compound names';
-            const msg2 = 'invalid email format (RFC 5321)';
-            const msg3 = 'type your comments please (1-200 chars)';
+            const msg1 = 'only unicode letters (2-32 chars) &amp; compound names &#10007;';
+            const msg2 = 'invalid email format (RFC 5321) &#10007;';
+            const msg3 = 'type your comments please &#10007;';
             const msg = {'firstname': msg1, 'lastname': msg1, 'email': msg2, 'comments': msg3};
             $span.classList.add('error');
             $span.innerHTML = msg[field];
