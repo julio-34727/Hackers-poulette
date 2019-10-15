@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {   # on ne peut traiter que le formul
             <form method="post" action="index.php" class="section__body form">
                 <p class="form__group">
                     <input type="text" class="form__input" name="firstname" id="firstname"  
-                        <?= preserveFirstnameInputs($post) ?> autocomplete="none" placeholder="Your first name (2-32 chars)" />
+                        <?= preserveFirstnameInputs($post) ?> autocomplete="off" placeholder="Your first name (2-32 chars)" />
                     <label for="firstname" class="form__label" <?= enableFieldErrors($post) ?>>
                         First name*: <?= printFirstnameFieldErrors($post) ?>
                     </label>
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {   # on ne peut traiter que le formul
                 </p>
                 <p class="form__group">
                     <input type="text" class="form__input" name="lastname" id="lastname" 
-                        <?= preserveLastnameInputs($post) ?> autocomplete="none" placeholder="Your last name (2-32 chars)" />
+                        <?= preserveLastnameInputs($post) ?> autocomplete="off" placeholder="Your last name (2-32 chars)" />
                     <label for="lastname" class="form__label" <?= enableFieldErrors($post) ?>>
                         Last name*: <?= printLastnameFieldErrors($post) ?>
                     </label>
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {   # on ne peut traiter que le formul
                 </p>
                 <p class="form__group">
                     <input type="text" class="form__input" name="email" id="email" 
-                        <?= preserveEmailInputs($post) ?> autocomplete="none" placeholder="mail@example.com" />
+                        <?= preserveEmailInputs($post) ?> autocomplete="off" placeholder="mail@example.com" />
                     <label for="email" class="form__label" <?= enableFieldErrors($post) ?>>
                         Email*: <?= printEmailFieldErrors($post) ?>
                     </label>
@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {   # on ne peut traiter que le formul
                 </p>
                 <p class="form__group">
                     <textarea class="form__area" name="comments" id="comments" cols="30" rows="10" 
-                        autocomplete="none" placeholder="Tell us more..."><?= preserveCommentsInputs($post) ?></textarea>
+                        autocomplete="off" placeholder="Tell us more..."><?= preserveCommentsInputs($post) ?></textarea>
                     <label for="comments" class="form__label" <?= enableFieldErrors($post) ?>>Comments*: <?= printCommentsFieldErrors($post) ?></label>
                     <label for="comments" class="screen-reader screen-reader-focusable">Comments
                     </label>
